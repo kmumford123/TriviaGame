@@ -53,8 +53,8 @@ window.onload = function() {
 
                     alert(window.questions[currentQuestion].answers[index].correct);
                     alert(index);
-                    window.currentQuestion++;
-                    createQuestion();
+                    // window.currentQuestion++;
+                    // createQuestion();
 
                 })
 
@@ -107,4 +107,3 @@ window.onload = function() {
 
         // Tally number of correct and wrong answers
         var correct = 0;
-        var incorrect = 0;

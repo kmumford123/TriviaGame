@@ -26,7 +26,14 @@ window.onload = function() {
 
     //Radio button on click alert this.index
     // alert questions[0].answers[THIS.INDEX].correct
-
+    function listQuestions() {
+        var qvalue = $("<div>");
+        for (var i = 0; i < questions.length; i++) {
+            $(qvalue).html("<span>" + questions[i].question + "</span>");
+            $("#questions").append(qvalue);
+        }
+    }
+    listQuestions();
 
     //answers[2].answer
     function createQuestion() {
@@ -38,37 +45,37 @@ window.onload = function() {
         // var a = $("#answers");
 
         // q.innerHTML = "<span>" + questions[currentQuestion].question + "</span>";
-        $("#question").html("<span>" + questions[currentQuestion].question + "</span>");
+        // $("#question").html("<span>" + questions[currentQuestion].question + "</span>");
         for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
 
             // var answer =   document.createElement("p");
-            var answer = $("p");
+            var answer = $("<span>");
 
             // var radio = document.createElement("input");
-            var radio = $("input");
+            var radio = $(`<input type = "radio", name = "answer"/>`);
 
-            $("input").attr(type = "radio", name = "answer");
+            // $("input").attr(type = "radio", name = "answer");
             // radio.setAttribute("type", "radio");
             // radio.setAttribute("name", "answer");
             radio.attr("data-index", i);
 
             // answer.innerHTML = questions[currentQuestion].answers[i].answer;
-            $("p").html(questions[currentQuestion].answers[i].answer);
+            $(answer).html(questions[currentQuestion].answers[i].answer + " ");
 
 
             $("input").on("click", function() {
-                var index = this.attr("data-index");
+                var index = radio.attr("data-index");
 
                 alert(questions[currentQuestion].answers[index].correct);
                 alert(index);
-                currentQuestion++;
-                createQuestion();
+                // currentQuestion++;
+                // createQuestion();
 
             })
 
-
-            $("p").append(radio);
+            $("#answers").append(radio);
             $("#answers").append(answer);
+            console.log(answer);
         }
     }
     createQuestion();
