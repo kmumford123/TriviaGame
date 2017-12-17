@@ -56,7 +56,7 @@ window.onload = function() {
             $("p").html(questions[currentQuestion].answers[i].answer);
 
 
-            radio.on("click", function() {
+            $("input").on("click", function() {
                 var index = this.attr("data-index");
 
                 alert(questions[currentQuestion].answers[index].correct);
