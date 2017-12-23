@@ -3,20 +3,20 @@
 var questions = [{
         question: "Is the sky blue?",
         answers: [
-            { answer: 'No', correct: false },
-            { answer: 'bad', correct: true },
-            { answer: 'yes', correct: false },
+            { a: 'No' },
+            { b: 'bad' },
+            { c: 'yes' },
         ],
-        youGotIt: false
+        youGotIt: "b"
     },
     {
         question: "Is the sky blue2?",
         answers: [
-            { answer: 'No2', correct: false },
+            { answer: 'No2' },
             { answer: 'bad2', correct: true },
-            { answer: 'yes2', correct: false },
+            { answer: 'yes2' },
         ],
-        youGotIt: false
+        youGotIt: "c"
     }
 ];
 
@@ -33,14 +33,21 @@ window.onload = function() {
     // Our stopwatch object
     var stopwatch = {
 
-        time: 120,
+        time: 10,
         reset: function() {
 
-            stopwatch.time = 120;
+            stopwatch.time = 10;
 
             // DONE: Change the "display" div to "00:00."
-            $("#display").text("02:00");
+            $("#display").text("0:10");
 
+        },
+        stop: function() {
+
+            // DONE: Use clearInterval to stop the count here and set the clock to not be running.
+            clearInterval(intervalId);
+            clockRunning = false;
+            // console.log(questions.question[currentQuestion].youGotIt)
         },
         start: function() {
 
@@ -49,13 +56,6 @@ window.onload = function() {
                 intervalId = setInterval(stopwatch.count, 1000);
                 clockRunning = true;
             }
-        },
-        stop: function() {
-
-            // DONE: Use clearInterval to stop the count here and set the clock to not be running.
-            clearInterval(intervalId);
-            clockRunning = false;
-            alert(`Sorry you ran out of time.  The correct answer was ${questions.question[currentQuestion].youGotIt}`);
         },
 
         count: function() {
@@ -128,6 +128,14 @@ window.onload = function() {
             // radio.setAttribute("type", "radio");
             // radio.setAttribute("name", "answer");
             radio.attr("data-index", j);
+
+            var timer = function() {
+                if (stopwatch.time < 1) {
+                    stopwatch.stop();
+                    alert(`Sorry you ran out of time!!!  The correct answer is ${questions.question[currentQuestion].youGotIt}`);
+                }
+            }
+            timer();
 
             // answer.innerHTML = questions[currentQuestion].answers[i].answer;
             $(answer).append(questions[currentQuestion].answers[j].answer + " ");
