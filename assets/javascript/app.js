@@ -5,8 +5,9 @@ var questions = [{
         answers: [
             { answer: 'No', correct: false },
             { answer: 'bad', correct: true },
-            { answer: 'yes', correct: true },
-        ]
+            { answer: 'yes', correct: false },
+        ],
+        youGotIt: false
     },
     {
         question: "Is the sky blue2?",
@@ -14,7 +15,8 @@ var questions = [{
             { answer: 'No2', correct: false },
             { answer: 'bad2', correct: true },
             { answer: 'yes2', correct: true },
-        ]
+        ],
+        youGotIt: false
     }
 ];
 
@@ -57,7 +59,7 @@ window.onload = function() {
 
         count: function() {
 
-            // DONE: increment time by 1, remember we cant use "this" here.
+            // DONE: decrease time by 1 for countdown.
             stopwatch.time--;
 
             // DONE: Get the current time, pass that into the stopwatch.timeConverter function,
@@ -90,30 +92,31 @@ window.onload = function() {
 
     //Radio button on click alert this.index
     // alert questions[0].answers[THIS.INDEX].correct
-    function listQuestions() {
+    // function listQuestions() {
 
-        for (var i = 0; i < questions.length; i++) {
-            var qvalue = $("<span id=questions[i]>");
-            $(qvalue).html(`<span>  ${questions[i].question}  </span>`);
-            $("#question").html(qvalue);
-            console.log(questions[i].question)
-        }
-    }
-    listQuestions();
+    //     for (var i = 0; i < questions.length; i++) {
+    //         var qvalue = $("<span id=questions[i]>");
+    //         $(qvalue).append(`<span>  ${questions[i].question}  </span>`);
+    //         $("#question").append(qvalue);
+    //         console.log(questions[i].question)
+    //     }
+    // }
+    // listQuestions();
 
     //answers[2].answer
     function createQuestion() {
 
         // var q = document.getElementById('question');
         // var q = $("#question")
-
+        $("#answers").empty();
         // var a = document.getElementById('answers');
         // var a = $("#answers");
 
         // q.innerHTML = "<span>" + questions[currentQuestion].question + "</span>";
-        // $("#question").html("<span>" + questions[currentQuestion].question + "</span>");
-        for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
 
+        $("#question").html("<span>" + questions[currentQuestion].question + "</span>");
+        for (var j = 0; j < questions[currentQuestion].answers.length; j++) {
+            // $("#answers").empty();
             // var answer =   document.createElement("p");
             var answer = $("<span>");
 
@@ -123,20 +126,38 @@ window.onload = function() {
             // $("input").attr(type = "radio", name = "answer");
             // radio.setAttribute("type", "radio");
             // radio.setAttribute("name", "answer");
-            radio.attr("data-index", i);
+            radio.attr("data-index", j);
 
             // answer.innerHTML = questions[currentQuestion].answers[i].answer;
-            $(answer).html(questions[currentQuestion].answers[i].answer + " ");
+            $(answer).append(questions[currentQuestion].answers[j].answer + " ");
 
+            var correctAnswer = 0
+            var wrongAnswer = 0
+            var score = function tally() {
+                if (youGotIt = true) {
+                    correctAnswer++;
+                } else {
+                    wrongAnswer++;
+                }
+            }
 
             $("input").on("click", function() {
                 var index = radio.attr("data-index");
+                if (questions[currentQuestion].answers[index].correct) {
+                    questions[currentQuestion].youGotIt = true;
+                    score();
+                    console.log(correctAnswer + " " + wrongAnswer);
+                } else {
+                    score();
+                    console.log(correctAnswer + " " + wrongAnswer);
+                    //show score, calculate score
+                }
 
-                alert(questions[currentQuestion].answers[index].correct);
-                alert(index);
-                // currentQuestion++;
-                // createQuestion();
-
+                // alert(questions[currentQuestion].answers[index].correct);
+                if (currentQuestion + 1 < questions.length) {
+                    currentQuestion++;
+                    createQuestion();
+                }
             })
 
             $("#answers").append(radio);
